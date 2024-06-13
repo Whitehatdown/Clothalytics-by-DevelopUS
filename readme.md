@@ -51,7 +51,7 @@ To utilize Clothalytics effectively, ensure your dataset meets the following req
 
 ## Feedback and Support
 
-We welcome your feedback and suggestions to improve Clothalytics. For support or inquiries, please contact us at [email@example.com](mailto:email@example.com).
+We welcome your feedback and suggestions to improve Clothalytics. For support or inquiries, please contact us at [work.developus@gmail.com](mailto:email@example.com).
 
 ---
 
