@@ -6,18 +6,6 @@
 </p>
 
 <br />
-<p align="center">
-  <a>
-    <img src="/Clothalytics_Logo.png" width="400" alt="Clothalytics Logo">
-  </a>
-</p>
-<br />
-<p align="center">
-  <a>
-    <img src="/Clothalytics_Logo.png" width="400" alt="Clothalytics Logo">
-  </a>
-</p>
-
 ## About
 
 Clothalytics is a sales prediction system tailored for retail cloth businesses, designed to enhance inventory management and decision-making processes through advanced analytics.
