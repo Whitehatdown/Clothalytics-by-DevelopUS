@@ -6,6 +6,8 @@
 </p>
 
 <br />
+
+
 ## About
 
 Clothalytics is a sales prediction system tailored for retail cloth businesses, designed to enhance inventory management and decision-making processes through advanced analytics.
