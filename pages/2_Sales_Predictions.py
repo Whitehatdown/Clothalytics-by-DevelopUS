@@ -21,17 +21,15 @@ st.set_page_config(
 st.title("Sales Predictions 💰")
 st.markdown(
     """
-    Pharmalitics uses the SARIMA model to generate sales predictions based on your uploaded dataset. 
+    Clothalytics uses the SARIMA model to generate sales predictions based on your uploaded dataset. 
     This advanced technique captures seasonal and trend patterns in the data to forecast future trends.
 
     To ensure efficiency and practicality, our app focuses on predicting sales for the top 30 most sold products 
-    in FirstMed Pharmacy and leverages the power of Auto ARIMA for predicting sales. By automating the model 
-    fitting process, we eliminate the need for manual selection and comparison of different models. 
-    
-    This streamlined 
-    approach enables us to provide forecasts for the key items driving the pharmacy's revenue, This automated process 
-    saves time and resources, allowing us to focus on delivering reliable sales predictions while leaving room for 
-    future expansion and inclusion of additional products.
+    across different stores. By leveraging the power of Auto ARIMA for predicting sales, we eliminate the need 
+    for manual selection and comparison of different models.
+
+    This streamlined approach enables us to provide forecasts for the key items driving sales, saving time and 
+    resources while delivering reliable sales predictions. Future expansion can include additional products.
 """
 )
 
@@ -40,7 +38,7 @@ st.sidebar.header("Sales Predictions")
 # Load the preprocessed dataset and stop if it doesn't exist
 preprocessed_dataset_path = "preprocessed_dataset.csv"
 if not os.path.exists(preprocessed_dataset_path):
-    st.warning("Dataset not uploaded. Please upload a dataset first in the Home page.")
+    st.warning("Dataset not uploaded. Please upload a dataset first on the Home page.")
     st.stop()
 
 preprocessed_dataset = pd.read_csv(preprocessed_dataset_path, parse_dates=["Date Sold"], index_col="Date Sold")
@@ -69,7 +67,7 @@ with top_30_products_adf_exp:
     # Iterate through each product
     for product in top_30_products:
         product_data = preprocessed_dataset[preprocessed_dataset["Product Name"] == product]
-        resampled_data = product_data.drop(["Product Name", "Sell Price", "Product Category"], axis=1).resample("W-MON").sum().reindex(date_range, fill_value=0).reset_index()
+        resampled_data = product_data.drop(["Product Name", "Sell Price", "Product Category", "Store Name"], axis=1).resample("W-MON").sum().reindex(date_range, fill_value=0).reset_index()
         resampled_data = resampled_data.set_index("index")
 
         # Perform the ADF test
@@ -115,7 +113,7 @@ with top_30_products_pred_con:
     # Get unique product names from top_30_products
     unique_product_names = top_30_products.unique().tolist()
 
-    predict_time_intervals = ["1 Week", "2 Weeks", "3 weeks", "1 Month"]
+    predict_time_intervals = ["1 Week", "2 Weeks", "3 Weeks", "1 Month"]
 
     # Input Widgets
     product_to_predict = st.selectbox("Select product to predict", unique_product_names)
@@ -123,7 +121,7 @@ with top_30_products_pred_con:
 
     # Get the data for the selected product
     pred_product_data = preprocessed_dataset[preprocessed_dataset["Product Name"] == product_to_predict]
-    pred_resampled_data = pred_product_data.drop(["Product Name", "Sell Price", "Product Category"], axis=1).resample(time_interval).sum().reindex(date_range, fill_value=0).reset_index()
+    pred_resampled_data = pred_product_data.drop(["Product Name", "Sell Price", "Product Category", "Store Name"], axis=1).resample(time_interval).sum().reindex(date_range, fill_value=0).reset_index()
     pred_resampled_data = pred_resampled_data.set_index("index")
 
     # Split data into train and test sets
@@ -147,8 +145,6 @@ with top_30_products_pred_con:
     rmse = np.sqrt(mse)
 
     act_pred_tab, final_app_tab = st.tabs(["📒 Actual vs Predicted", "📊 Final App"])
-
-    col1, col2 = st.columns(2)
 
     with act_pred_tab:
         data = pd.concat([pred_resampled_data['Quantity'].rename('Actual'), predictions.rename('Predicted')], axis=1).reset_index()
@@ -181,7 +177,7 @@ with top_30_products_pred_con:
             fold=['Actual', 'Predicted'],
             as_=['data', 'value']
         ).properties(
-            title="What the predictions should look like in final app",
+            title="What the predictions should look like in the final app",
             width=600,
             height=400
         )
@@ -210,7 +206,7 @@ with top_30_products_pred_con:
         ax[0].set_title(f"ACF Plot - {product_to_predict}")
         ax[1].set_title(f"PACF Plot - {product_to_predict}")
         plt.tight_layout()
-        st.write("**ACF and PCF Plot**")
+        st.write("**ACF and PACF Plot**")
         st.pyplot(fig)
 
         col1, col2 = st.columns(2)
@@ -221,4 +217,3 @@ with top_30_products_pred_con:
         with col2:
             st.write("Test Set")
             st.dataframe(test_data)
-

@@ -1,0 +1,21 @@
+Store Name,Product Category,Recommended Inventory
+Store A,Children,17.0
+Store A,Men,18.0
+Store A,Unisex,19.0
+Store A,Women,19.0
+Store B,Children,18.0
+Store B,Men,19.0
+Store B,Unisex,18.0
+Store B,Women,18.0
+Store C,Children,19.0
+Store C,Men,18.199999999999996
+Store C,Unisex,18.349999999999994
+Store C,Women,19.0
+Store D,Children,17.599999999999994
+Store D,Men,19.0
+Store D,Unisex,17.0
+Store D,Women,19.0
+Store E,Children,19.0
+Store E,Men,18.89999999999999
+Store E,Unisex,18.0
+Store E,Women,19.0
